@@ -11,18 +11,20 @@ Plugin de Noesis para visualizar y exportar archivos BSP de mapas de la versión
 ## Preparación de Modelos
 
 1. **Extraé los archivos de DATA.ARC**: Usá la herramienta de [IWILLCRAFT RenderEclipseExtractor](https://github.com/IWILLCRAFT-M0d/RenderEclipse-Tools) (ahora conocida como **Climax ARC Manager**)
-2. **Descomprime los recursos**: Ejecutá el script [ClimaxSH_Unpack_Resource.bms](https://github.com/IWILLCRAFT-M0d/RenderEclipse-Tools/blob/main/scripts/ClimaxSH_Unpack_Resource.bms) para extraer los archivos sin extensión que contienen los modelos de mapas
-3. **Identificá los modelos BSP**: 
-
+2. **Descomprimí los recursos**: Ejecutá el script [ClimaxSH_Unpack_Resource.bms](https://github.com/IWILLCRAFT-M0d/RenderEclipse-Tools/blob/main/scripts/ClimaxSH_Unpack_Resource.bms) para extraer los archivos sin extensión que contienen los modelos de mapas.
+3. **Identificá los modelos BSP**: Una vez extraídos, vas a encontrar archivos sin extensión. Los archivos BSP suelen ser dos, el que corresponde es el de mayor peso.
+4. **Renombrá los BSP**: Cambia la extensión BSP con mayor peso, por ejemplo: `8.bsp` -> `8.shsm_bsp`
+5. **Verificá la integridad**: Aseguráte de que los archivos renombrados sean reconocidos correctamente por Noesis
+6. **Abrir en Noesis**: Cargá los archivos `.shsm_bsp` en Noesis para visualizar y exportar los modelos
 
 ## Preparación de Texturas
 
-1. **Extrae los archivos de DATA.ARC**: Usa la herramienta **IWILLCRAFT RenderEclipseExtractor** (ahora conocida como **Climax ARC Manager**)
-2. **Descomprime los recursos**: Ejecuta el script `ClimaxSH_Unpack_Resource.bms` para extraer los archivos sin extensión que contienen los modelos de mapas
-3. **Identifica las texturas**: Una vez extraídos, encontrarás varios archivos sin extensión. Los primeros archivos (generalmente del 0 al 6) son las texturas
-4. **Renombra las texturas**: Cambia la extensión de estos archivos a `.txd`
-5. **Convierte a PNG**: Usa **MagicTXD** o el plugin de Noesis `tex_SilentHillClimax.py` para abrir cada archivo `.txd` y exportarlos como PNG
-6. **Coloca las texturas**: Coloca los PNG exportados en la misma carpeta que el archivo BSP renombrado (con extensión `.shsm_bsp`)
+1. **Extraé los archivos de DATA.ARC**: Usá la herramienta de [IWILLCRAFT RenderEclipseExtractor](https://github.com/IWILLCRAFT-M0d/RenderEclipse-Tools) (ahora conocida como **Climax ARC Manager**)
+2. **Descomprimí los recursos**: Ejecutá el script [ClimaxSH_Unpack_Resource.bms](https://github.com/IWILLCRAFT-M0d/RenderEclipse-Tools/blob/main/scripts/ClimaxSH_Unpack_Resource.bms) para extraer los archivos sin extensión que contienen los modelos de mapas junto a sus demas archivos.
+3. **Identificá las texturas**: Una vez extraídos, encontrarás varios archivos sin extensión. Los primeros archivos (generalmente del 0 al 6) son las texturas
+4. **Renombrá las texturas**: Cambia la extensión de estos archivos a `.txd`
+5. **Convertí a PNG**: Usá [MagicTXD](https://gtaforums.com/topic/851436-relopensrc-magictxd/) o el plugin de Noesis [tex_SilentHillClimax.py](https://github.com/IWILLCRAFT-M0d/RenderEclipse-Tools/blob/main/scripts/tex_SilentHillClimax.py) para abrir cada archivo `.txd` y exportarlos como PNG
+6. **Colocá las texturas**: Coloca los PNG exportados en la misma carpeta que el archivo BSP renombrado (con extensión `.shsm_bsp`)
 
 ## Método Técnico
 
