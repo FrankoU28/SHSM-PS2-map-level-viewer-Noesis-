@@ -1,6 +1,12 @@
-# Visor de Mapas SHSM PS2 (Plugin Noesis)
+<h1 align="center">
+  <a>Visor de Mapas SHSM PS2 (Plugin Noesis)</a>
+</h1>
 
-Plugin de Noesis para visualizar y exportar archivos BSP de mapas de la versión PS2 de Silent Hill: Shattered Memories, con soporte completo de texturas.
+<h4 align="center">Plugin de Noesis para visualizar y exportar archivos BSP de mapas de la versión PS2 de Silent Hill: Shattered Memories, con soporte completo de texturas.</h4>
+
+<p align="center">
+  <img src="images/sm_logo.png" alt="SHSM_Logo">
+  <br>
 
 ## Modo de Uso
 
