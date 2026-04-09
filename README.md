@@ -8,7 +8,7 @@ Plugin de Noesis para visualizar y exportar archivos BSP de mapas de la versión
 2. **Instala el plugin**: Coloca este plugin en la carpeta `plugins/python` de Noesis junto con los demás plugins
 3. **Abre los mapas**: Carga cualquier archivo `.shsm_bsp` en Noesis para visualizarlo
 
-## Preparación de Modelos
+### Preparación de Modelos
 
 1. **Extraé los archivos de DATA.ARC**: Usá la herramienta de [IWILLCRAFT RenderEclipseExtractor](https://github.com/IWILLCRAFT-M0d/RenderEclipse-Tools) (ahora conocida como **Climax ARC Manager**)
 2. **Descomprimí los recursos**: Ejecutá el script [ClimaxSH_Unpack_Resource.bms](https://github.com/IWILLCRAFT-M0d/RenderEclipse-Tools/blob/main/scripts/ClimaxSH_Unpack_Resource.bms) para extraer los archivos sin extensión que contienen los modelos de mapas.
@@ -17,7 +17,7 @@ Plugin de Noesis para visualizar y exportar archivos BSP de mapas de la versión
 5. **Verificá la integridad**: Aseguráte de que los archivos renombrados sean reconocidos correctamente por Noesis
 6. **Abrir en Noesis**: Cargá los archivos `.shsm_bsp` en Noesis para visualizar y exportar los modelos
 
-## Preparación de Texturas
+### Preparación de Texturas
 
 1. **Extraé los archivos de DATA.ARC**: Usá la herramienta de [IWILLCRAFT RenderEclipseExtractor](https://github.com/IWILLCRAFT-M0d/RenderEclipse-Tools) (ahora conocida como **Climax ARC Manager**)
 2. **Descomprimí los recursos**: Ejecutá el script [ClimaxSH_Unpack_Resource.bms](https://github.com/IWILLCRAFT-M0d/RenderEclipse-Tools/blob/main/scripts/ClimaxSH_Unpack_Resource.bms) para extraer los archivos sin extensión que contienen los modelos de mapas junto a sus demas archivos.
@@ -28,16 +28,32 @@ Plugin de Noesis para visualizar y exportar archivos BSP de mapas de la versión
 
 ## Método Técnico
 
-El plugin utiliza un enfoque robusto para la extracción de geometría:
+El plugin implementa un enfoque híbrido que combina lo mejor de dos estrategias diferentes:
 
-- **Extracción de materiales**: Recorre el árbol de fragmentos (chunks) de RenderWare para extraer la lista de materiales (con nombres de texturas) y el mapeo de divisiones (split) → ID de material usando BinMeshPlg
-- **Escaneo de patrones VIF**: Realiza un escaneo binario VIF dentro del rango de datos exacto de cada división para extraer de forma robusta vértices, coordenadas UV y colores
-- **Evita crashes**: Este enfoque previene fallos de C causados por `rapi.unpackPS2VIF()` con los datos VIF de SHSM
+### Extracción de Materiales y Texturas
 
-## Cambios respecto a Origins (fmt_renderware_ps2_bsp.py)
+1. **Recorrido de estructura RenderWare** (inspiración: `fmt_renderware_ps2_bsp.py` de Origins de [IWILLCRAFT](https://github.com/IWILLCRAFT-M0d) y [Laurynas Zubavičius (Sparagas)](https://github.com/Sparagas))
+   - Recorre el árbol de fragmentos (chunks) de RenderWare secuencialmente
+   - Extrae la lista de materiales con sus nombres de texturas asociadas
+   - Lee el mapeo de divisiones (splits) → IDs de material desde el BinMeshPlg
+   - Mantiene el **contexto de materiales** para después asociar geometría a texturas
 
-- Extracción de geometría mediante escaneo de patrones binarios en lugar de `rapi.unpackPS2VIF()`
-- Escaneo delimitado por división → garantiza asignación correcta de materiales
-- Soporte mejorado para caracteres no ASCII en nombres de texturas (mediante RWString)
-- Registrado como `.shsm_bsp` para evitar conflictos con el plugin `.bsp` de Origins
-- Función `bsp_load_model` envuelta en try/except para mayor estabilidad
+### Extracción de Geometría
+
+2. **Escaneo de patrones binarios VIF** (inspiración: `fmt_sho_ps2_map_bsp.py` de [RODOLFO NUÑEZ (roocker666)](https://www.youtube.com/@rodolfonunez666) y [Laurynas Zubavičius (Sparagas)](https://github.com/Sparagas))
+   - En lugar de usar `rapi.unpackPS2VIF()` (que causa crashes con datos VIF de SHSM), busca patrones binarios VIF directamente
+   - Los patrones buscados son:
+     - `\x05\x04\x01\x00\x01\x00` → posiciones de vértices (XYZW)
+     - `\x05\x04\x01\x00\x01\x01` → coordenadas UV
+     - `\x05\x04\x01\x00\x01\x02` → colores RGBA (ubyte)
+   - **Delimit el escaneo al rango exacto de cada split** → garantiza asociación correcta de geometría a materiales
+   - Extrae vértices, coordenadas UV y colores de forma robusta sin crashes
+
+### Cambios Técnicos Específicos
+
+- Extracción de geometría mediante escaneo de patrones binarios delimitados por split en lugar de `rapi.unpackPS2VIF()`
+- Preservación del mapeo split → materialID → nombre de textura del árbol RenderWare
+- Manejo robusta de caracteres no ASCII en nombres de texturas mediante RWString
+- Registrado como `.shsm_bsp` para evitar conflictos con el plugin `.bsp` de Origins (`fmt_renderware_ps2_bsp.py`)
+- Función `bsp_load_model` envuelta en try/except para mayor tolerancia a errores
+- Búsqueda y carga de texturas en carpeta `/Textures/` junto al archivo BSP
