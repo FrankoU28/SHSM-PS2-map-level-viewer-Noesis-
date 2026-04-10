@@ -3,8 +3,8 @@
       File: fmt_renderware_ps2_bsp_SHSM.py
    Authors: Laurynas Zubavičius (Sparagas)
             IWILLCRAFT
-            Rodolfo Nuñez (roocker666) [por el script fmt_sho_ps2_map_bsp.py]
-            FrankoU_28 
+            Rodolfo Nuñez (roocker666) [fmt_sho_ps2_map_bsp.py]
+            FrankoU28 (adapted for SHSM)
    Adapted: For Silent Hill: Shattered Memories (PS2)
    Purpose: RenderWare (Sony - PlayStation 2) - Silent Hill Shattered Memories PS2
             Loads geometry WITH vertex colors AND textures (when PNGs are present).
